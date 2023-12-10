@@ -18,7 +18,7 @@ source:
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
+  number: 0
   entry_points:
     - typegen = continuedev.models.generate_json_schema:main
 

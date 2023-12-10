@@ -73,7 +73,7 @@ test:
   commands:
     - pip check
     - python -m continuedev --help
-    - python -c 'from shutil import which; from continuedev.libs.util.ripgrep import rg_path; assert(which("rg") == rg_path())'
+    - python -c 'from shutil import which; from continuedev.libs.util.ripgrep import get_rg_path; assert(which("rg") == get_rg_path())'
     - test $(python -c 'from continuedev.server.meilisearch_server import download_meilisearch; download_meilisearch()' | grep -c "Downloading MeiliSearch") -eq 0  # [unix]
   requires:
     - pip

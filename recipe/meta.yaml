@@ -1,5 +1,5 @@
 {% set name = "continuedev" %}
-{% set version = "0.1.100" %}
+{% set version = "0.1.104" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/continuedev-{{ version }}.tar.gz
-  sha256: d6b73c46b78b95bece110626f1f4b74d5b896e9e36826f540c554d809ca1d362
+  sha256: ae5661ae0fb2cdd6dd6d55b1c100421196116f12696d77cc5323d42caae243f5
   patches:
     # Bump directory-tree to 0.0.4
     # Use beautifulsoup4 instead of bs4.
@@ -18,7 +18,7 @@ source:
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
+  number: 0
   entry_points:
     - typegen = continuedev.models.generate_json_schema:main
 

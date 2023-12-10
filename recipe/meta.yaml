@@ -12,11 +12,13 @@ source:
     # Bump directory-tree to 0.0.4
     # Use beautifulsoup4 instead of bs4.
     - dependencies.patch
+    - try-local-meilisearch.patch
+    - try-local-rg.patch
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
   entry_points:
     - typegen = continuedev.models.generate_json_schema:main
 
@@ -64,12 +66,15 @@ requirements:
     - tqdm >=4.66.1,<5.0.0
     - html2text >=2020.1.16,<2021.0.0
 
+    - meilisearch >=1.3.2,<2
 test:
   imports:
     - continuedev
   commands:
-    - python -m continuedev --help
     - pip check
+    - python -m continuedev --help
+    - python -c 'from shutil import which; from continuedev.libs.util.ripgrep import rg_path; assert(which("rg") == rg_path())'
+    - test $(python -c 'from continuedev.server.meilisearch_server import download_meilisearch; download_meilisearch()' | grep -c "Downloading MeiliSearch") -eq 0  # [unix]
   requires:
     - pip
 

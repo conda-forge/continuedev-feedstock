@@ -1,0 +1,19 @@
+diff --git a/continuedev/server/meilisearch_server.py b/continuedev/server/meilisearch_server.py
+index 3c67f92..bd2fd8f 100644
+--- a/continuedev/server/meilisearch_server.py
++++ b/continuedev/server/meilisearch_server.py
+@@ -29,10 +29,13 @@ async def download_meilisearch():
+     """
+     Downloads MeiliSearch.
+     """
++    import shutil
+ 
+     serverPath = getServerFolderPath()
+ 
+-    if os.name == "nt":
++    if path := shutil.which("meilisearch"):
++        shutil.copy2(path, serverPath)
++    elif os.name == "nt":
+         logger.debug("Downloading MeiliSearch for Windows...")
+         download_url = "https://github.com/meilisearch/meilisearch/releases/download/v1.3.2/meilisearch-windows-amd64.exe"
+         download_path = getMeilisearchExePath()

@@ -1,0 +1,18 @@
+diff --git a/continuedev/libs/util/ripgrep.py b/continuedev/libs/util/ripgrep.py
+index 4c5cf04..142f81a 100644
+--- a/continuedev/libs/util/ripgrep.py
++++ b/continuedev/libs/util/ripgrep.py
+@@ -3,7 +3,12 @@ import sys
+ 
+ 
+ def get_rg_path():
+-    if os.name == "nt":
++    import shutil
++
++    rg_path = shutil.which("rg")
++    if rg_path:
++        return rg_path
++    elif os.name == "nt":
+         paths_to_try = [
+             f"C:\\Users\\{os.getlogin()}\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\node_modules.asar.unpacked\\@vscode\\ripgrep\\bin\\rg.exe",
+             f"C:\\Users\\{os.getlogin()}\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\node_modules.asar.unpacked\\vscode-ripgrep\\bin\\rg.exe",

@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/continuedev-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/continuedev-{{ version }}.tar.gz
   sha256: ae5661ae0fb2cdd6dd6d55b1c100421196116f12696d77cc5323d42caae243f5
   patches:
     # Bump directory-tree to 0.0.4
@@ -18,18 +18,18 @@ source:
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
   entry_points:
     - typegen = continuedev.models.generate_json_schema:main
 
 
 requirements:
   host:
-    - python >=3.8,<4.0
+    - python {{ python_min }}
     - pip
     - poetry-core
   run:
-    - python >=3.8,<4.0
+    - python >={{ python_min }},<4.0
     - openai >=0.27.5,<0.28.0
     - boltons >=23.0.0,<24.0.0
     - pydantic >=1.10.8,<2.0.0
@@ -77,6 +77,7 @@ test:
     - test $(python -c 'import async; from continuedev.server.meilisearch_server import download_meilisearch; async.get_event_loop().run_until_complete(download_meilisearch())' 2>&1 | grep -c "Downloading MeiliSearch") -eq 0  # [unix]
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://continue.dev/
